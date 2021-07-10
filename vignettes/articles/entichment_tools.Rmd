@@ -1,0 +1,43 @@
+---
+title: "Enrichment Tools"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(misctoolsr)
+```
+
+
+```{r}
+se <- exampleSE()
+sigs <- exampleSignatures()
+```
+
+
+Create a contingency table
+
+```{r}
+contabs <- contingencyTable(x = se, cols = c("up", "down"), signatures = sigs)
+contabs
+```
+
+Perform Fisher's enrichment test on the contingency tables
+
+```{r}
+enrich_results <- enrichmentTestFisher(contabs = contabs)
+enrich_results
+```
+
+Perform Fisher's enrichment directly on a SummarizedExperiment
+
+```{r}
+enrich_results <- ora(x = se, cols = c("up", "down"), signatures = sigs, alpha = 0.05)
+enrich_results
+```
+

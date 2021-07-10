@@ -1,2 +1,4 @@
 ^misctoolsr\.Rproj$
 ^\.Rproj\.user$
+^LICENSE\.md$
+^vignettes/articles$

@@ -1,6 +1,30 @@
+utils::globalVariables(c("expression1", "expression2"))
+#' Example SummarizedExperment
+#'
+#' \code{\link{exampleSE}} creates an example of SummarizedExperiment (toy data).
+#'
+#' @return
+#' A SummarizedExperiment.
+#'
+#' @importFrom stats rnorm
+#' @importFrom magrittr set_rownames
+#' @importFrom S4Vectors DataFrame
+#' @importFrom dplyr mutate
+#' @importFrom SummarizedExperiment SummarizedExperiment
+#' @importFrom S4Vectors SimpleList
+#' @importFrom magrittr %>%
+#'
+#' @export
+#'
+#' @examples
+#'
+#' library(misctoolsr)
+#' se <- exampleSE()
+#' se
+#'
 exampleSE <- function() {
     dimensions <- c(892, 76)
-    m <- matrix(rnorm(dimensions[1] * dimensions[2]),
+    m <- matrix(stats::rnorm(dimensions[1] * dimensions[2]),
                 nrow = dimensions[1] , ncol = dimensions[2],
                 dimnames = list(paste0("row", 1:dimensions[1]), paste0("col", 1:dimensions[2])))
     col_data <- data.frame(
@@ -15,15 +39,15 @@ exampleSE <- function() {
     changed <- rownames(m)[!rownames(m) %in% unchanged]
     up <- sample(changed, 30)
     down <- changed[!changed %in% up]
-    rm(.Random.seed, envir=globalenv())
+    # rm(.Random.seed, envir=globalenv())
 
     row_data <- data.frame(
         taxa = rownames(m)
     ) %>%
         dplyr::mutate(
             expression1 = dplyr::case_when(taxa %in% unchanged ~ "not_differential", taxa %in% changed ~ "differential"),
-            differential = ifelse(expression1 == "differential", TRUE, FALSE),
             expression2 = dplyr::case_when(taxa %in% unchanged ~ "not_differential", taxa %in% up ~ "up", taxa %in% down ~ "down"),
+            differential = ifelse(expression1 == "differential", TRUE, FALSE),
             up = ifelse(expression2 == "up", TRUE, FALSE),
             down = ifelse(expression2 == "down", TRUE, FALSE)
         ) %>%
@@ -38,10 +62,25 @@ exampleSE <- function() {
     return(se)
 }
 
-exampleSignatures1 <- function() {
+#' Example Signatures
+#'
+#' \code{\link{exampleSignatures}} creates an example of signatures (toy data).
+#'
+#' @return
+#' A named list of signatures.
+#'
+#' @importFrom stats rnorm
+#'
+#' @export
+#'
+#' @examples
+#' library(misctoolsr)
+#' sigs <- exampleSignatures()
+#'
+exampleSignatures <- function() {
 
     dimensions <- c(892, 76)
-    m <- matrix(rnorm(dimensions[1] * dimensions[2]),
+    m <- matrix(stats::rnorm(dimensions[1] * dimensions[2]),
                 nrow = dimensions[1] , ncol = dimensions[2],
                 dimnames = list(paste0("row", 1:dimensions[1]), paste0("col", 1:dimensions[2])))
 
@@ -51,7 +90,7 @@ exampleSignatures1 <- function() {
     # set.seed(2930)
     up <- sample(changed, 30)
     down <- changed[!changed %in% up]
-    rm(.Random.seed, envir=globalenv())
+    # rm(.Random.seed, envir=globalenv())
 
     list_of_sigs <- list(
         sig1 = c(sample(up, 13, replace = FALSE),
