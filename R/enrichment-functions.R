@@ -1,4 +1,4 @@
-utils::globalVariables(c("p_value", "odds_ratio", "upper_ci", "lower_ci", "n_sig_genes"))
+utils::globalVariables(c("p_value", "odds_ratio", "upper_ci", "lower_ci", "n_sig_genes", "signature", "significance"))
 #' Create contingency Table
 #'
 #' \code{contingencyTable} creates a list of 2x2 contingency tables for Fisher's exact test.
@@ -106,6 +106,7 @@ contingencyTable <- function(x, cols, signatures, features = "rownames") {
 #' @importFrom epitools oddsratio.wald
 #' @importFrom tibble as_tibble
 #' @importFrom magrittr set_names
+#' @importFrom tidyr separate
 #' @importFrom dplyr arrange
 #' @importFrom magrittr %>%
 #'
@@ -140,6 +141,7 @@ enrichmentTestFisher <- function(contabs) {
         t() %>%
         tibble::as_tibble(rownames = "rownames") %>%
         magrittr::set_colnames(c("set_x_signature",  "p_value", "odds_ratio", "upper_ci", "lower_ci", "n_sig_genes")) %>%
+        tidyr::separate(col = "set_x_signature", into = c("set", "signature"), sep = "_x_") %>%
         dplyr::arrange(p_value, odds_ratio)
 
     return(output)
@@ -190,4 +192,56 @@ ora <- function(x, cols, signatures, features = "rownames", alpha = 0.05) {
     output <- enrichmentTestFisher(contab) %>%
         dplyr::filter(p_value <= alpha)
     return(output)
+}
+
+
+#' Plont Enrichment Results
+#'
+#' \code{plotFisherRes} plots the output of calling either \code{\link{enrichmentTestFisher}} or
+#' \code{\link{ora}}.
+#'
+#' @param x
+#' Output from \code{enrichmentTestFisher} or \code{ora}
+#' @param alpha
+#' Significance threshold; default is 0.05.
+#'
+#' @return
+#' A plot (ggplot2) object.
+#'
+#' @importFrom dplyr mutate
+#' @importFrom ggplot2 ggplot
+#' @importFrom ggplot2 geom_errorbar
+#' @importFrom ggplot2 geom_point
+#' @importFrom ggplot2 geom_hline
+#' @importFrom ggplot2 facet_grid
+#' @importFrom ggplot2 theme_bw
+#' @importFrom ggplot2 aes
+#' @importFrom magrittr %>%
+#'
+#' @export
+#'
+#' @examples
+#'
+#' library(misctoolsr)
+#' se <- exampleSE()
+#' sigs <- exampleSignatures()
+#' contabs <- contingencyTable(x = se, cols = c("up", "down"), signatures = sigs)
+#' enrichment_result <- enrichmentTestFisher(contabs)
+#' enrichment_plot <- plotFisherRes(enrichment_result)
+#' enrichment_plot
+#'
+#'
+plotFisherRes <- function(x, alpha = 0.05) {
+    x %>%
+        dplyr::mutate(significance = factor(ifelse(p_value <= alpha, "significant", "not significant"), levels = c("significant", "not significant"))) %>%
+        ggplot2::ggplot(ggplot2::aes(signature, log(odds_ratio))) +
+        ggplot2::geom_errorbar(ggplot2::aes(ymin = log(lower_ci), ymax = log(upper_ci), color = significance),
+                      width = 0.1) +
+        ggplot2::geom_point(ggplot2::aes(size = n_sig_genes, color = significance)) +
+        ggplot2::geom_hline(yintercept = log(1), linetype = 2) +
+        ggplot2::facet_grid(.~set, scales = "free_x", space = "free") +
+        ggplot2::theme_bw() +
+        ggplot2::annotate(geom = "text", label = paste0("alpha <= ", alpha),
+                          x = Inf, y = -Inf,
+                          hjust = 1.1, vjust = -1)
 }

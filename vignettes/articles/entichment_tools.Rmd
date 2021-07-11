@@ -5,12 +5,16 @@ title: "Enrichment Tools"
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  message = FALSE,
+  warning = FALSE
 )
 ```
 
 ```{r setup}
 library(misctoolsr)
+library(magrittr)
+library(ggplot2)
 ```
 
 
@@ -24,20 +28,40 @@ Create a contingency table
 
 ```{r}
 contabs <- contingencyTable(x = se, cols = c("up", "down"), signatures = sigs)
-contabs
+contabs %>% 
+    knitr::kable()
 ```
 
 Perform Fisher's enrichment test on the contingency tables
 
 ```{r}
 enrich_results <- enrichmentTestFisher(contabs = contabs)
-enrich_results
+enrich_results %>% 
+    knitr::kable()
+```
+
+Plot results:
+
+```{r}
+plotFisherRes(enrich_results)
 ```
 
 Perform Fisher's enrichment directly on a SummarizedExperiment
 
 ```{r}
-enrich_results <- ora(x = se, cols = c("up", "down"), signatures = sigs, alpha = 0.05)
-enrich_results
+ora_results <- ora(x = se, cols = c("up", "down"), signatures = sigs, alpha = 0.05)
+ora_results %>% 
+    knitr::kable()
+```
+
+Plot results:
+
+```{r}
+plotFisherRes(ora_results)
+```
+
+```{r}
+p1 <- plotFisherRes(enrich_results)
+
 ```
 
