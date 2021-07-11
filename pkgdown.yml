@@ -3,5 +3,8 @@ pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   enrichment_tools: enrichment_tools.html
-last_built: 2021-07-11T09:00Z
+last_built: 2021-07-11T09:23Z
+urls:
+  reference: https://sdgamboa.github.io/misctoolsr/reference
+  article: https://sdgamboa.github.io/misctoolsr/articles
 
