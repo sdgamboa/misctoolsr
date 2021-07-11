@@ -1,13 +1,21 @@
 ---
-title: "Enrichment Tools"
+title: "Functions related to enrichment"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Functions related to enrichment}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
+
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   message = FALSE,
-  warning = FALSE
+  warning = FALSE,
+  fig.height = 4,
+  fig.width = 6
 )
 ```
 

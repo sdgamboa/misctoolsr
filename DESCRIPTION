@@ -27,3 +27,4 @@ Imports:
     S4Vectors,
     tidyr,
     ggplot2
+VignetteBuilder: knitr
