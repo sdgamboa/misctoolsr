@@ -1,1 +1,5 @@
+navbar:
+ structure:
+   right: [github]
+
 url: https://sdgamboa.github.io/misctoolsr
