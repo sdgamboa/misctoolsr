@@ -13,3 +13,7 @@ own yet.
 devtools::install_github("sdgamboa/misctoolsr")
 ```
 
+
+This paragraph is a test to verify that the github action set by
+packagedown actually works.
+
