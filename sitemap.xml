@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://sdgamboa.github.io/misctoolsr/404.html</loc>
+  </url>
+  <url>
+    <loc>https://sdgamboa.github.io/misctoolsr/LICENSE-text.html</loc>
+  </url>
+  <url>
+    <loc>https://sdgamboa.github.io/misctoolsr/LICENSE.html</loc>
+  </url>
+  <url>
+    <loc>https://sdgamboa.github.io/misctoolsr/articles/enrichment_tools.html</loc>
+  </url>
+  <url>
+    <loc>https://sdgamboa.github.io/misctoolsr/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://sdgamboa.github.io/misctoolsr/authors.html</loc>
+  </url>
+  <url>
     <loc>https://sdgamboa.github.io/misctoolsr/index.html</loc>
   </url>
   <url>
@@ -16,12 +34,15 @@
     <loc>https://sdgamboa.github.io/misctoolsr/reference/exampleSignatures.html</loc>
   </url>
   <url>
+    <loc>https://sdgamboa.github.io/misctoolsr/reference/getRawLinksFromGithubDir.html</loc>
+  </url>
+  <url>
+    <loc>https://sdgamboa.github.io/misctoolsr/reference/index.html</loc>
+  </url>
+  <url>
     <loc>https://sdgamboa.github.io/misctoolsr/reference/ora.html</loc>
   </url>
   <url>
     <loc>https://sdgamboa.github.io/misctoolsr/reference/plotFisherRes.html</loc>
-  </url>
-  <url>
-    <loc>https://sdgamboa.github.io/misctoolsr/articles/enrichment_tools.html</loc>
   </url>
 </urlset>
